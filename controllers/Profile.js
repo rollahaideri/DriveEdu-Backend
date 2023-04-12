@@ -1,5 +1,5 @@
 const { Router } = require("express"); // import Router from express
-const Todo = require("../models/Todo"); // import Todo model
+const Profile = require("../models/Profile"); // import Profile model
 const { isLoggedIn } = require("./middleware"); // import isLoggedIn custom middleware
 
 const router = Router();
@@ -7,14 +7,20 @@ const router = Router();
 //custom middleware could also be set at the router level like so
 // router.use(isLoggedIn) then all routes in this router would be protected
 
+// Index Route without isLoggedIn middelware
+router.get("fetch", (req, res) => {
+  Profile.find({}).then((DBitems) => {
+    res.send(DBitems);
+  });
+});
 // Index Route with isLoggedIn middleware
-router.get("/", isLoggedIn, async (req, res) => {
-  const { username } = req.user; // get username from req.user property created by isLoggedIn middleware
+router.get("/", async (req, res) => {
+  // const { username } = req.user;
+  
+  // get username from req.user property created by isLoggedIn middleware
   //send all todos with that user
   res.json(
-    await Todo.find({ username }).catch((error) =>
-      res.status(400).json({ error })
-    )
+    await Profile.find({}).catch((error) => res.status(400).json({ error }))
   );
 });
 
@@ -24,7 +30,7 @@ router.get("/:id", isLoggedIn, async (req, res) => {
   const _id = req.params.id; // get id from params
   //send target todo
   res.json(
-    await Todo.findOne({ username, _id }).catch((error) =>
+    await Profile.findOne({ username, _id }).catch((error) =>
       res.status(400).json({ error })
     )
   );
@@ -36,7 +42,7 @@ router.post("/", isLoggedIn, async (req, res) => {
   req.body.username = username; // add username property to req.body
   //create new todo and send it in response
   res.json(
-    await Todo.create(req.body).catch((error) =>
+    await Profile.create(req.body).catch((error) =>
       res.status(400).json({ error })
     )
   );
@@ -49,7 +55,7 @@ router.put("/:id", isLoggedIn, async (req, res) => {
   const _id = req.params.id;
   //update todo with same id if belongs to logged in User
   res.json(
-    await Todo.updateOne({ username, _id }, req.body, { new: true }).catch(
+    await Profile.updateOne({ username, _id }, req.body, { new: true }).catch(
       (error) => res.status(400).json({ error })
     )
   );
@@ -61,7 +67,7 @@ router.delete("/:id", isLoggedIn, async (req, res) => {
   const _id = req.params.id;
   //remove todo with same id if belongs to logged in User
   res.json(
-    await Todo.remove({ username, _id }).catch((error) =>
+    await Profile.remove({ username, _id }).catch((error) =>
       res.status(400).json({ error })
     )
   );

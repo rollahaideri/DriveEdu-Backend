@@ -3,8 +3,8 @@ const express = require("express"); // import express
 const morgan = require("morgan"); //import morgan
 const { log } = require("mercedlogger"); // import mercedlogger's log function
 const cors = require("cors"); // import cors
-const UserRouter = require("./controllers/User") //import User Routes
-const TodoRouter = require("./controllers/Todo") // import Todo Routes
+const UserRouter = require("./controllers/User"); //import User Routes
+const ProfileRouter = require("./controllers/Profile"); // import Profile Routes
 
 //DESTRUCTURE ENV VARIABLES WITH DEFAULT VALUES
 const { PORT = 3000 } = process.env;
@@ -23,8 +23,9 @@ app.get("/", (req, res) => {
 });
 
 app.use("/user", UserRouter); // send all "/user" requests to UserRouter for routing
-app.use("/todos", TodoRouter) // send all "/todos" request to TodoROuter
-
+app.use("/profile", ProfileRouter); // send all "/todos" request to ProfileROuter
 
 // APP LISTENER
-app.listen(PORT,"0.0.0.0", () => log.green("SERVER STATUS", `Listening on port ${PORT}`  ));
+app.listen(PORT, "0.0.0.0", () =>
+  log.green("SERVER STATUS", `Listening on port ${PORT}`)
+);
