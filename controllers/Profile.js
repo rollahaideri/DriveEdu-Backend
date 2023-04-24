@@ -8,7 +8,7 @@ const router = Router();
 // router.use(isLoggedIn) then all routes in this router would be protected
 
 // Index Route without isLoggedIn middelware
-router.get("fetch", (req, res) => {
+router.get("/fetch", (req, res) => {
   Profile.find({}).then((DBitems) => {
     res.send(DBitems);
   });
@@ -40,7 +40,7 @@ router.get("/:id", isLoggedIn, async (req, res) => {
 router.post("/", isLoggedIn, async (req, res) => {
   const { username } = req.user; // get username from req.user property created by isLoggedIn middleware
   req.body.username = username; // add username property to req.body
-  //create new todo and send it in response
+  //create new profile and send it in response
   res.json(
     await Profile.create(req.body).catch((error) =>
       res.status(400).json({ error })

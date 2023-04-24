@@ -23,7 +23,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/user", UserRouter); // send all "/user" requests to UserRouter for routing
-app.use("/profile", ProfileRouter); // send all "/todos" request to ProfileROuter
+app.use("/profile", ProfileRouter); // send all "/profile" request to ProfileROuter
 
 // APP LISTENER
 app.listen(PORT, "0.0.0.0", () =>
