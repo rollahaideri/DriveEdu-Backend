@@ -39,6 +39,12 @@ router.get("/:id", isLoggedIn, async (req, res) => {
 // create Route with isLoggedIn middleware
 router.post("/", isLoggedIn, async (req, res) => {
   const { username } = req.user; // get username from req.user property created by isLoggedIn middleware
+  
+  // Check if the user already has a profile
+  const existingProfile = await Profile.findOne({ username });
+  if (existingProfile) {
+    return res.status(400).json({ error: "User already has a profile" });
+  }
   req.body.username = username; // add username property to req.body
   //create new profile and send it in response
   res.json(
@@ -47,6 +53,8 @@ router.post("/", isLoggedIn, async (req, res) => {
     )
   );
 });
+
+
 
 // update Route with isLoggedIn middleware
 router.put("/:id", isLoggedIn, async (req, res) => {
