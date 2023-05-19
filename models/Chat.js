@@ -12,6 +12,8 @@ const SubmittedChatMessageSchema = new Schema({
 
 // Define the schema for the receiving chat message
 const ReceivingChatMessageSchema = new Schema({
+  fromUsername: { type: String, required: true },
+  username: { type: String, required: true },
     id: {
         type: String,
     default: uuidv4,
@@ -27,10 +29,12 @@ const ReceivingChatMessageSchema = new Schema({
       type: String,
       required: true
     }
-  }, {
-    // set _id to false to exclude it from the schema
-    _id: false
-  });
+  },
+  //  {
+  //   // set _id to false to exclude it from the schema
+    // _id: false 
+  // }
+  );
 
 // Create the Mongoose models for the schemas
 const SubmittedChatMessage = mongoose.model(
