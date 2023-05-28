@@ -6,8 +6,8 @@ const ProfileSchema = new Schema({
   firstName: { type: String, required: true },
   lastName: { type: String, required: true },
   city: { type: String, required: true },
-  drivingLicense: { type: String, required: false },
-  carModel: { type: String, required: true },
+  drivingLicense: { type: String, required: true },
+  carModel: { type: String, required: false },
   
 });
 
